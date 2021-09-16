@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Covid19api</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="/js/custom.js" defer></script>
+</head>
+<body>
+    <h1 class="">Covid19 Stats</h1>
+    <h2 class="">Country</h2>
+    <form action="" id="selectCountryForm" class="select-country-form">
+        <label for="inputCountry">Choose your country from the list:</label>
+        <input id="getSelectedCountry" name="inputCountry" list="selectCountry" placeholder="Select country...">
+        <datalist name="" id="selectCountry"></datalist>
+        <input type="submit" value="Get Data">
+    </form>
+    <h3 id="displayCountry">No country selected yet</h3>
+    <p id="pCountryConfirmed" class="">Total confirmed: <span></span></p>
+    <p id="pCountryRecovered" class="">Total recovered: <span></span></p>
+    <p id="pCountryDeaths" class="">Total deaths: <span></span></p>
+
+    <h2 class="">Global Stats</h2>
+    <div>
+        <p id="pGlobalDate" class="">Last updated on: <span></span></p>
+        <p id="pGlobalNewConfirmed" class="">New confirmed cases: <span></span></p>
+        <p id="pGlobalTotalConfirmed" class="">Total confirmed cases: <span></span></p>
+        <p id="pGlobalNewDeaths" class="">New deaths: <span></span></p>
+        <p id="pGlobalTotalDeaths" class="">Total deaths: <span></span></p>
+        <p id="pGlobalNewRecovered" class="">New recovered cases: <span></span></p>
+        <p id="pGlobalTotalRecovered" class="">Total recovered cases: <span></span></p>
+    </div>
+</body>
+</html>
