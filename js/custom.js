@@ -1,6 +1,6 @@
 var covidData = {};
 
-window.addEventListener("load",async()=>{
+window.addEventListener("load", async () => {
   covidData = await fetchCovidData();
   createSelectCountry(covidData.Countries);
   createGlobalStats(covidData.Global)
@@ -47,12 +47,21 @@ function submitCountry(e){
   const data = covidData.Countries.find(c => c.Country === getSelectedCountry.value);
   console.log(data)
 
-  let pCountryConfirmed = document.querySelector("#pCountryConfirmed span")
-  let pCountryRecovered = document.querySelector("#pCountryRecovered span")
-  let pCountryDeaths = document.querySelector("#pCountryDeaths span")
-  pCountryConfirmed.innerHTML = data.TotalConfirmed.format()
-  pCountryRecovered.innerHTML = data.TotalRecovered.format()
-  pCountryDeaths.innerHTML = data.TotalDeaths.format()
+  let pCountryDate = document.querySelector("#pCountryDate span")
+  let pCountryNewConfirmed = document.querySelector("#pCountryNewConfirmed span")
+  let pCountryTotalConfirmed = document.querySelector("#pCountryTotalConfirmed span")
+  let pCountryNewDeaths = document.querySelector("#pCountryNewDeaths span")
+  let pCountryTotalDeaths = document.querySelector("#pCountryTotalDeaths span")
+  let pCountryNewRecovered = document.querySelector("#pCountryNewRecovered span")
+  let pCountryTotalRecovered = document.querySelector("#pCountryTotalRecovered span")
+
+  pCountryDate.innerHTML = data.Date.slice(0, 10)
+  pCountryNewConfirmed.innerHTML = data.NewConfirmed.format()
+  pCountryTotalConfirmed.innerHTML = data.TotalConfirmed.format()
+  pCountryNewDeaths.innerHTML = data.NewDeaths.format()
+  pCountryTotalDeaths.innerHTML = data.TotalDeaths.format()
+  pCountryNewRecovered.innerHTML = data.NewRecovered.format()
+  pCountryTotalRecovered.innerHTML = data.TotalRecovered.format()
 
   let displayCountry = document.getElementById("displayCountry")
   displayCountry.innerHTML = `${getSelectedCountry.value}` + " statistics"
@@ -60,13 +69,6 @@ function submitCountry(e){
 }
 
 function createGlobalStats(globalResult) {
-  const globalDate = globalResult.Date
-  const globalNewConfirmed = globalResult.NewConfirmed
-  const globalTotalConfirmed = globalResult.TotalConfirmed
-  const globalNewDeaths = globalResult.NewDeaths
-  const globalTotalDeaths = globalResult.TotalDeaths
-  const globalNewRecovered = globalResult.NewRecovered
-  const globalTotalRecovered = globalResult.TotalRecovered
   let pGlobalDate = document.querySelector("#pGlobalDate span")
   let pGlobalNewConfirmed = document.querySelector("#pGlobalNewConfirmed span")
   let pGlobalTotalConfirmed = document.querySelector("#pGlobalTotalConfirmed span")
@@ -74,6 +76,15 @@ function createGlobalStats(globalResult) {
   let pGlobalTotalDeaths = document.querySelector("#pGlobalTotalDeaths span")
   let pGlobalNewRecovered = document.querySelector("#pGlobalNewRecovered span")
   let pGlobalTotalRecovered = document.querySelector("#pGlobalTotalRecovered span")
+
+  const globalDate = globalResult.Date
+  const globalNewConfirmed = globalResult.NewConfirmed
+  const globalTotalConfirmed = globalResult.TotalConfirmed
+  const globalNewDeaths = globalResult.NewDeaths
+  const globalTotalDeaths = globalResult.TotalDeaths
+  const globalNewRecovered = globalResult.NewRecovered
+  const globalTotalRecovered = globalResult.TotalRecovered
+
   pGlobalDate.innerHTML = globalDate.slice(0, 10)
   pGlobalNewConfirmed.innerHTML = globalNewConfirmed.format()
   pGlobalTotalConfirmed.innerHTML = globalTotalConfirmed.format()
