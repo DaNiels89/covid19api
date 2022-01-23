@@ -1,4 +1,4 @@
-var covidData = {};
+let covidData = {};
 
 window.addEventListener("load", async () => {
   covidData = await fetchCovidData();
@@ -16,9 +16,7 @@ async function fetchCovidData() {
 
     return data;
   } catch (error) {
-    // const message = `An error has occured: ${res.status}`;
     console.error(error)
-    // throw new Error(error);
   }
 }
 
@@ -28,24 +26,28 @@ async function fetchCovidData() {
  * @returns null
  */
 function createSelectCountry(countries){
-  let selectCountry = document.getElementById("selectCountry");
+  const selectCountry = document.getElementById("selectCountry");
   countries.forEach(function(value, index) {
     let countryName = value.Country
-    const option = document.createElement("option")
+    let option = document.createElement("option")
     option.setAttribute("value", countryName)
     selectCountry.appendChild(option)
-    // console.log(value.Country)
   })
 }
-
 
 //https://api.covid19api.com/total/dayone/country/
 function submitCountry(e){
   e.preventDefault()
   let getSelectedCountry = document.getElementById("getSelectedCountry")
-  
-  const data = covidData.Countries.find(c => c.Country === getSelectedCountry.value);
-  console.log(data)
+
+  //Get value from search country input field and gives a capital letter to first word if you search for a country
+  const selectedCountry = covidData.Countries.find(c => c.Country === getSelectedCountry.value.charAt(0).toUpperCase() + getSelectedCountry.value.slice(1));
+  // console.log(selectedCountry)
+
+  if (selectedCountry === undefined) {
+    alert("Country isn't filled in, country is missing a capital letter and or country doesn't excist")
+    return
+  }
 
   let pCountryDate = document.querySelector("#pCountryDate span")
   let pCountryNewConfirmed = document.querySelector("#pCountryNewConfirmed span")
@@ -55,35 +57,35 @@ function submitCountry(e){
   let pCountryNewRecovered = document.querySelector("#pCountryNewRecovered span")
   let pCountryTotalRecovered = document.querySelector("#pCountryTotalRecovered span")
 
-  pCountryDate.innerHTML = data.Date.slice(0, 10)
-  pCountryNewConfirmed.innerHTML = data.NewConfirmed.format()
-  pCountryTotalConfirmed.innerHTML = data.TotalConfirmed.format()
-  pCountryNewDeaths.innerHTML = data.NewDeaths.format()
-  pCountryTotalDeaths.innerHTML = data.TotalDeaths.format()
-  pCountryNewRecovered.innerHTML = data.NewRecovered.format()
-  pCountryTotalRecovered.innerHTML = data.TotalRecovered.format()
+  pCountryDate.innerHTML = selectedCountry.Date.slice(0, 10)
+  pCountryNewConfirmed.innerHTML = selectedCountry.NewConfirmed.format()
+  pCountryTotalConfirmed.innerHTML = selectedCountry.TotalConfirmed.format()
+  pCountryNewDeaths.innerHTML = selectedCountry.NewDeaths.format()
+  pCountryTotalDeaths.innerHTML = selectedCountry.TotalDeaths.format()
+  pCountryNewRecovered.innerHTML = selectedCountry.NewRecovered.format()
+  pCountryTotalRecovered.innerHTML = selectedCountry.TotalRecovered.format()
 
   let displayCountry = document.getElementById("displayCountry")
-  displayCountry.innerHTML = `${getSelectedCountry.value}` + " statistics"
+  displayCountry.innerHTML = `${getSelectedCountry.value.charAt(0).toUpperCase() + getSelectedCountry.value.slice(1)}` + " statistics"
   getSelectedCountry.value = ""
 }
 
 function createGlobalStats(globalResult) {
-  let pGlobalDate = document.querySelector("#pGlobalDate span")
-  let pGlobalNewConfirmed = document.querySelector("#pGlobalNewConfirmed span")
-  let pGlobalTotalConfirmed = document.querySelector("#pGlobalTotalConfirmed span")
-  let pGlobalNewDeaths = document.querySelector("#pGlobalNewDeaths span")
-  let pGlobalTotalDeaths = document.querySelector("#pGlobalTotalDeaths span")
-  let pGlobalNewRecovered = document.querySelector("#pGlobalNewRecovered span")
-  let pGlobalTotalRecovered = document.querySelector("#pGlobalTotalRecovered span")
+  const pGlobalDate = document.querySelector("#pGlobalDate span")
+  const pGlobalNewConfirmed = document.querySelector("#pGlobalNewConfirmed span")
+  const pGlobalTotalConfirmed = document.querySelector("#pGlobalTotalConfirmed span")
+  const pGlobalNewDeaths = document.querySelector("#pGlobalNewDeaths span")
+  const pGlobalTotalDeaths = document.querySelector("#pGlobalTotalDeaths span")
+  const pGlobalNewRecovered = document.querySelector("#pGlobalNewRecovered span")
+  const pGlobalTotalRecovered = document.querySelector("#pGlobalTotalRecovered span")
 
-  const globalDate = globalResult.Date
-  const globalNewConfirmed = globalResult.NewConfirmed
-  const globalTotalConfirmed = globalResult.TotalConfirmed
-  const globalNewDeaths = globalResult.NewDeaths
-  const globalTotalDeaths = globalResult.TotalDeaths
-  const globalNewRecovered = globalResult.NewRecovered
-  const globalTotalRecovered = globalResult.TotalRecovered
+  let globalDate = globalResult.Date
+  let globalNewConfirmed = globalResult.NewConfirmed
+  let globalTotalConfirmed = globalResult.TotalConfirmed
+  let globalNewDeaths = globalResult.NewDeaths
+  let globalTotalDeaths = globalResult.TotalDeaths
+  let globalNewRecovered = globalResult.NewRecovered
+  let globalTotalRecovered = globalResult.TotalRecovered
 
   pGlobalDate.innerHTML = globalDate.slice(0, 10)
   pGlobalNewConfirmed.innerHTML = globalNewConfirmed.format()
